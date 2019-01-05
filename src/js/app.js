@@ -13,10 +13,10 @@ $(document).ready(function () {
         let dot = esgraph.dot(cfg,{counter: 0 ,source: codeToParse});
         const workerURL = 'node_modules/viz.js/full.render.js';
         let viz = new Viz({workerURL});
-        viz.renderSVGElement( 'digraph {' + getGraphString(dot,args,res[1].params,res[0]) + '}')
-            .then(function(element) {
-                document.body.appendChild(element);
-            })
+        let graphStr = getGraphString(dot,args,res[1].params,res[0]);
+        $('#parsedCode').val(graphStr);
+        viz.renderSVGElement( 'digraph {' + graphStr + '}')
+            .then(function(element) {document.body.appendChild(element);})
             .catch(() => {// Create a new Viz instance (@see Caveats page for more info)
                 viz = new Viz({ workerURL });
             });

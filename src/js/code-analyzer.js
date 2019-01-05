@@ -17,16 +17,15 @@ const getGraphString = (oldGraphString,args,vars,initString)=>{
     for(;i<strArr.length;i++)
     {
         if(strArr[i].includes('->'))
-        {
             break;
-        }
     }
     let firstNode = strArr[1].substring(0,strArr[1].indexOf(' '));
     let newNodes = [];
     let newEdges = [];
     fMePlease(firstNode,strArr.slice(i+1),getMapFromName(strArr.slice(1,i)),newNodes,newEdges,strLets,true);
+    newNodes = addConnectionPoints(newNodes,newEdges);
     let toReturn = getStringFromArray('',newNodes);
-    return getStringFromArray(toReturn,newEdges);
+    return getStringFromArray(toReturn, newEdges);
 };
 
 
@@ -75,7 +74,7 @@ const getExitNodeName = (strArr) =>{
 const fMePlease = (node,edgesArr,varMap,newNodes,newEdges,evaluationString,canPaint)=>{
     let next = findNext(node,edgesArr);
     if(next.length === 0) {
-        addNode(node,varMap[node],newNodes,canPaint,'square');
+        addNode(node,varMap[node],newNodes,canPaint,'rectangle');
     }
     else if(next.length > 1) {
         moreThanOneNext(node,edgesArr,varMap,newNodes,newEdges,evaluationString,canPaint);
@@ -90,7 +89,7 @@ const onlyOneNext = (node,edgesArr,varMap,newNodes,newEdges,evaluationString,can
     let res = mergeLetsAndAss(node,varMap,edgesArr);
     let str = res[0];
     let next = res[2];
-    addNode(node,str,newNodes,canPaint,'square');
+    addNode(node,str,newNodes,canPaint,'rectangle');
     addEdge(node,next[0].name,next[0].label,newEdges);
     return fMePlease(next[0].name,edgesArr,varMap,newNodes,newEdges,
         evaluationString + res[1],canPaint);
@@ -222,9 +221,18 @@ const findPrevious = (nodeName, edgesArr)=>{
     {
         if(edgesArr[i].includes('-> ' + nodeName + ' '))
         {
-            toReturn.push(getTransitionTo(edgesArr[i]));
+            toReturn.push(getTransitionFrom(edgesArr[i]));
         }
     }
+    return toReturn;
+};
+
+const getTransitionFrom = (str)=>{
+    let toReturn = {};
+    toReturn['name'] = str.substring(0,str.indexOf('->') - 1);
+    let temp = str.substring(str.indexOf('->') + 3);
+    temp = temp.substring(temp.indexOf('"')+1);
+    toReturn['label'] = temp.substring(0,temp.indexOf('"'));
     return toReturn;
 };
 
@@ -344,6 +352,30 @@ const getFunctionCodeAndInitialization = (code)=>{
             initString = initString + escodegen.generate(code[i]);
         }
     }
+};
+
+const addConnectionPoints = (newNodes,newEdges)=>{
+    let newNodesNew = [];
+    for(let i=0;i<newNodes.length;i++) {
+        let previous = findPrevious(newNodes[i].substring(0,newNodes[i].indexOf('[') - 1) ,newEdges);newNodesNew.push(newNodes[i]);
+        if(previous.length > 1) {
+            let newNodeName = 'a' + newNodeIndex;
+            newNodeIndex++;
+            if(findCanIPaintPlease(newNodes[i]))
+                newNodesNew.push(newNodeName + ' [label="",color="green"]');
+            else
+                newNodesNew.push(newNodeName + ' [label=""]');
+            for(let j=0;j<previous.length;j++)
+                replaceInEdgesArrayFindByNameAndLabel(newEdges,previous[j].name,newNodeName,previous[j].label);
+            newEdges.push(newNodeName + ' -> ' + newNodes[i].substring(0,newNodes[i].indexOf('[') - 1) + ' [label=""]');
+        }
+    }
+    return newNodesNew;
+};
+
+const findCanIPaintPlease = (node)=>{
+    return node.includes('color="green"');
+
 };
 export {parseCode,getGraphString,findNext,getMapFromName,getTransitionTo,findPrevious,addNode,resetGlobalIndex,edgesContain,nodeContain,resetNodeIndexNotVisible,
     getFunctionCodeAndInitialization};

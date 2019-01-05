@@ -38,46 +38,54 @@ let code1Big = 'let z = 1;function ReturnAverage(value, AS, MIN, MAX){\n' +
     '}\n';
 let res1Big = 'n1 [label="(1)\n' +
     'av\n' +
-    'i = 0, ti = 0, tv = 0, sum = 0",color="green",shape=square]\n' +
+    'i = 0, ti = 0, tv = 0, sum = 0",color="green",shape=rectangle]\n' +
     'n3 [label="(2)\n' +
     'ti < AS ",color="green",shape=diamond]\n' +
+    'a3 [label="",color="green"]\n' +
     'a1 [label="(3)\n' +
     ' value[i] != -999",color="green",shape=diamond]\n' +
     'n4 [label="(4)\n' +
-    'ti++",color="green",shape=square]\n' +
+    'ti++",color="green",shape=rectangle]\n' +
     'n5 [label="(5)\n' +
     'value[i] >= MIN ",color="green",shape=diamond]\n' +
     'a2 [label="(6)\n' +
     ' value[i] <= MAX",color="green",shape=diamond]\n' +
     'n6 [label="(7)\n' +
     'tv++\n' +
-    'sum = sum + value[i]",color="green",shape=square]\n' +
+    'sum = sum + value[i]",color="green",shape=rectangle]\n' +
     'n8 [label="(8)\n' +
-    'i++",color="green",shape=square]\n' +
+    'i++",color="green",shape=rectangle]\n' +
+    'a4 [label="",color="green"]\n' +
     'n9 [label="(9)\n' +
     'tv > 0",color="green",shape=diamond]\n' +
+    'a5 [label="",color="green"]\n' +
     'n10 [label="(10)\n' +
-    'av = sum/tv",color="green",shape=square]\n' +
+    'av = sum/tv",color="green",shape=rectangle]\n' +
     'n11 [label="(11)\n' +
-    'return  av;",color="green",shape=square]\n' +
+    'return  av;",color="green",shape=rectangle]\n' +
+    'a6 [label="",color="green"]\n' +
     'n12 [label="(12)\n' +
-    'av =  -999",shape=square]\n' +
-    'n1 -> n3 [label=""]\n' +
+    'av =  -999",shape=rectangle]\n' +
+    'n1 -> a3 [label=""]\n' +
     'n3 -> a1 [label="true"]\n' +
-    'n3 -> n9 [label="false"]\n' +
+    'n3 -> a5 [label="false"]\n' +
     'a1 -> n4 [label="true"]\n' +
-    'a1 -> n9 [label="false"]\n' +
+    'a1 -> a5 [label="false"]\n' +
     'n4 -> n5 [label=""]\n' +
     'n5 -> a2 [label="true"]\n' +
-    'n5 -> n8 [label="false"]\n' +
+    'n5 -> a4 [label="false"]\n' +
     'a2 -> n6 [label="true"]\n' +
-    'a2 -> n8 [label="false"]\n' +
-    'n6 -> n8 [label=""]\n' +
-    'n8 -> n3 [label=""]\n' +
+    'a2 -> a4 [label="false"]\n' +
+    'n6 -> a4 [label=""]\n' +
+    'n8 -> a3 [label=""]\n' +
     'n9 -> n10 [label="true"]\n' +
     'n9 -> n12 [label="false"]\n' +
-    'n10 -> n11 [label=""]\n' +
-    'n12 -> n11 [label=""]';
+    'n10 -> a6 [label=""]\n' +
+    'n12 -> a6 [label=""]\n' +
+    'a3 -> n3 [label=""]\n' +
+    'a4 -> n8 [label=""]\n' +
+    'a5 -> n9 [label=""]\n' +
+    'a6 -> n11 [label=""]';
 let code2Big = 'let z = 1;function ReturnAverage(value, AS, MIN, MAX){\n' +
     '\tlet av;\n' +
     '\tlet i = 0, ti = 0, tv = 0, sum = 0;\n' +
@@ -97,46 +105,54 @@ let code2Big = 'let z = 1;function ReturnAverage(value, AS, MIN, MAX){\n' +
     '}\n';
 let res2Big = 'n1 [label="(1)\n' +
     'av\n' +
-    'i = 0, ti = 0, tv = 0, sum = 0",color="green",shape=square]\n' +
+    'i = 0, ti = 0, tv = 0, sum = 0",color="green",shape=rectangle]\n' +
     'n3 [label="(2)\n' +
     'ti < AS ",color="green",shape=diamond]\n' +
+    'a3 [label="",color="green"]\n' +
     'n4 [label="(3)\n' +
-    'ti++",shape=square]\n' +
+    'ti++",shape=rectangle]\n' +
+    'a4 [label=""]\n' +
     'n5 [label="(4)\n' +
     'value[i] >= MIN ",shape=diamond]\n' +
     'a2 [label="(5)\n' +
     ' value[i] <= MAX",shape=diamond]\n' +
     'n6 [label="(6)\n' +
     'tv++\n' +
-    'sum = sum + value[i]",shape=square]\n' +
+    'sum = sum + value[i]",shape=rectangle]\n' +
     'n8 [label="(7)\n' +
-    'i++",shape=square]\n' +
+    'i++",shape=rectangle]\n' +
+    'a5 [label=""]\n' +
     'a1 [label="(8)\n' +
     ' value[i] != -999",color="green",shape=diamond]\n' +
     'n9 [label="(9)\n' +
     'tv > 0",color="green",shape=diamond]\n' +
     'n10 [label="(10)\n' +
-    'av = sum/tv",shape=square]\n' +
+    'av = sum/tv",shape=rectangle]\n' +
     'n11 [label="(11)\n' +
-    'return  av;",color="green",shape=square]\n' +
+    'return  av;",color="green",shape=rectangle]\n' +
+    'a6 [label="",color="green"]\n' +
     'n12 [label="(12)\n' +
-    'av =  -999",color="green",shape=square]\n' +
-    'n1 -> n3 [label=""]\n' +
-    'n3 -> n4 [label="true"]\n' +
+    'av =  -999",color="green",shape=rectangle]\n' +
+    'n1 -> a3 [label=""]\n' +
+    'n3 -> a4 [label="true"]\n' +
     'n3 -> a1 [label="false"]\n' +
     'n4 -> n5 [label=""]\n' +
     'n5 -> a2 [label="true"]\n' +
-    'n5 -> n8 [label="false"]\n' +
+    'n5 -> a5 [label="false"]\n' +
     'a2 -> n6 [label="true"]\n' +
-    'a2 -> n8 [label="false"]\n' +
-    'n6 -> n8 [label=""]\n' +
-    'n8 -> n3 [label=""]\n' +
-    'a1 -> n4 [label="true"]\n' +
+    'a2 -> a5 [label="false"]\n' +
+    'n6 -> a5 [label=""]\n' +
+    'n8 -> a3 [label=""]\n' +
+    'a1 -> a4 [label="true"]\n' +
     'a1 -> n9 [label="false"]\n' +
     'n9 -> n10 [label="true"]\n' +
     'n9 -> n12 [label="false"]\n' +
-    'n10 -> n11 [label=""]\n' +
-    'n12 -> n11 [label=""]';
+    'n10 -> a6 [label=""]\n' +
+    'n12 -> a6 [label=""]\n' +
+    'a3 -> n3 [label=""]\n' +
+    'a4 -> n4 [label=""]\n' +
+    'a5 -> n8 [label=""]\n' +
+    'a6 -> n11 [label=""]';
 describe('The javascript parser', () => {
     /*it('is parsing an empty function correctly', () => {
         assert.equal(

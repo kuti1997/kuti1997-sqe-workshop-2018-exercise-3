@@ -165,7 +165,7 @@ describe('The javascript parser', () => {
     });
     it('find previous', () => {
         assert.equal(
-            findPrevious('n1',edgesArr).length, 1
+            findPrevious('n1',edgesArr).length, 0
         );
     });
     it('find next', () => {

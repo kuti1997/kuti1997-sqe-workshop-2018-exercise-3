@@ -220,7 +220,7 @@ const findPrevious = (nodeName, edgesArr)=>{
     let toReturn = [];
     for(let i=0;i<edgesArr.length;i++)
     {
-        if(edgesArr[i].includes('-> ' + nodeName))
+        if(edgesArr[i].includes('-> ' + nodeName + ' '))
         {
             toReturn.push(getTransitionTo(edgesArr[i]));
         }
